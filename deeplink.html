@@ -9,6 +9,9 @@
 			// Get IE or Edge browser version
 			var versionIE = detectIE();
 	
+			// Is MAC Safari ?
+			var isMacSaf = detectMacSafari();
+			
             var schemeurl = 'LeumiCardCh://?screen=' + getParameterByName('scr') + '&extradata={&quot;dtscatnum&quot;:&quot;' + getParameterByName('app') + '&quot;}';
             var weblink = decodeURIComponent(getParameterByName('web'));
 	        
@@ -25,7 +28,7 @@
                 window.location.href = weblink  + "?utm_campaign=" + campaign + "&utm_medium=" + medium+ "&utm_source=" + source;
             }, 100);
 			
-			if (versionIE === false) {
+			if (versionIE === false && isMacSaf === false) {
 				window.location = schemeurlga;
 			}
         }
@@ -82,7 +85,22 @@
 		  // other browser
 		  return false;
 		}
-	
+
+		function detectMacSafari() {
+		  var ua = window.navigator.userAgent;
+
+		  // Macbook pro
+		  // ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8';
+
+		  var macIndex = ua.indexOf('Macintosh');
+		  var safariIndex = ua.indexOf('Safari');
+		  if (macIndex > 0 && safariIndex > 0) {
+			return true;
+		  }
+
+		  return false;
+		}	
+		
         tryopenscheme();
 	      
     </script>
